@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>学生管理系统</title>
+    <link rel="icon" href="./images/logo.ico">
+    <link rel="stylesheet" href="./css/demo.css">
+    <!-- 分页css -->
+    <link rel="stylesheet" href="./分页插件/css/page.css">
+</head>
+
+<body>
+    <div class="wrapper">
+
+        <header class='header'>
+            <div class="logo">
+                <h1>渡一教育</h1>
+                <a href="http://www.duyiedu.com" target="_blank"><img src="./images/logo.png" alt=""></a>
+                <span>渡</span><span>一</span><span>教</span><span>育</span>
+            </div>
+            <div class="btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="drop-list">
+                <ul>
+                    <li class='list student-list' data-id="student-list">学生列表</li>
+                    <li class='list student-add' data-id="student-add">新增学生</li>
+                </ul>
+            </div>
+        </header>
+
+        <div class="left-menu">
+            <h3>学生管理</h3>
+            <ul>
+                <li class='list student-list' data-id="student-list">学生列表</li>
+                <li class='list student-add' data-id="student-add">新增学生</li>
+            </ul>
+        </div>
+
+        <div class="right-content">
+            <div class="tab-content-item echarts" id="student-echarts">
+                <div class='area'></div>
+                <div class='sex'></div>
+            </div>
+            <div class="tab-content-item s-list" id='student-list'>
+                <div class="search-wrap">
+                    <label for="search-inp">搜索：</label>
+                    <input type="text" class="inp" id='search-inp' placeholder="请输入学号或姓名或地区">
+                    <input type="radio" name="sex" value="0" data-sex="0" id='male' checked>
+                    <label for="male">男</label>
+                    <input type="radio" name="sex" value="1" data-sex="1" id='female'>
+                    <label for="female">女</label>
+                    <button class="search-btn">搜索</button>
+                </div>
+                <table id="students-table">
+                    <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>学号</th>
+                            <th>性别</th>
+                            <th>邮箱</th>
+                            <th>年龄</th>
+                            <th>手机号</th>
+                            <th>住址</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <!-- 分页部分 -->
+                <div class="cubs"></div>
+                <!-- 编辑弹出框 -->
+                <div class="modal" id="modal" style="display:none">
+                    <div class="modal-content" id="modal-content">
+                        <div class="title">
+                            <h2>编辑信息</h2>
+                        </div>
+                        <form id="modal-form">
+                            <div class="form-con">
+                                <div class="item">
+                                    <label for="name1">姓名：</label>
+                                    <input id="name1" name="name" type="text" class="text">
+                                </div>
+                                <div class="item">
+                                    <label for="sN1">学号：</label>
+                                    <input id="sNo1" name="sNo" type="text" class="text">
+                                </div>
+                                <div class="item section">
+                                    <label for="">性别：</label>
+                                    <div class="con">
+                                        <input type="radio" id='female1' name='sex' value='1'>
+                                        <label for="female1">女</label>
+                                        <input type="radio" id='male1' name='sex' value='0' checked>
+                                        <label for="male1">男</label>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <label for="email1">邮箱：</label>
+                                    <input id="email1" name="email" class="text" type="text">
+                                </div>
+                                <div class="item">
+                                    <label for="birth1">出生年：</label>
+                                    <input id="birth1" name="birth" class="text" type="text">
+                                </div>
+                                <div class="item">
+                                    <label for="phone1">手机号：</label>
+                                    <input id="phone1" name="phone" class="text" type="text">
+                                </div>
+                                <div class="item">
+                                    <label for="address1">住址：</label>
+                                    <input id="address1" type="text" class="text" name="address">
+                                </div>
+                                <div class="btn item">
+                                    <input type="submit" value="提交" class="btn submit">
+                                    <input type="reset" value="重置" id="reset" class="btn reset">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- 删除弹框 -->
+                <div class="del-modal" style="display:none">
+                    <div class="con">
+                        <p>是否确认删除此条数据?</p>
+                        <div class="btn">
+                            <button class="sure-btn">确认</button>
+                            <button class="reset-btn">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content-item s-add" id='student-add'>
+                <form id="student-form">
+                    <div>
+                        <div class="item">
+                            <label for="name">姓名：</label>
+                            <input id="name" name="name" type="text" class="text">
+                        </div>
+                        <div class="item">
+                            <label for="sNo">学号：</label>
+                            <input id="sNo" name="sNo" type="text" class="text">
+                        </div>
+                        <div class="item section">
+                            <label for="">性别：</label>
+                            <div class="con">
+                                <input type="radio" id='male' name='sex' value='0' checked>
+                                <label for="male">男</label>
+                                <input type="radio" id='female' name='sex' value='1'>
+                                <label for="female">女</label>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <label for="email">邮箱：</label>
+                            <input id="email" name="email" class="text" type="text">
+                        </div>
+                        <div class="item">
+                            <label for="birth">出生年：</label>
+                            <input id="birth" name="birth" class="text" type="text">
+                        </div>
+                        <div class="item">
+                            <label for="phone">手机号：</label>
+                            <input id="phone" name="phone" class="text" type="text">
+                        </div>
+                        <div class="item">
+                            <label for="address">住址：</label>
+                            <input id="address" type="text" class="text" name="address">
+                        </div>
+                        <div class="btn item">
+                            <label for=""></label>
+                            <input type="button" value="添加" id="submit-add" class="btn add">
+                            <input type="reset" value="重置" class="btn reset">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- jquery类库 -->
+    <script src="./tool/jquery-3.0.0.min.js"></script>
+    <!-- ECharts类库 -->
+    <script src="./tool/echarts.js"></script>
+    <!-- 分页插件 -->
+    <script src="./分页插件/tool/page.js"></script>
+    <!-- 数据交互 -->
+    <script src="./js/interractive.js"></script>
+    <!-- 点击事件 -->
+    <script src="./js/click.js"></script>
+    <!-- 图表 -->
+    <script src="./js/pie.js"></script>
+</body>
+
+</html>
